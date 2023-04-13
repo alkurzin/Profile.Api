@@ -23,14 +23,10 @@ namespace Profile.Service.Infrastructure
 
         public async Task<Domain.Profile.Profile> AddProfile(AddProfileCommand command, CancellationToken cancellationToken)
         {
-            // путь к папке Files
-            string path = Path.Combine(Directory.GetCurrentDirectory(), command.InnScan.FileName);
-            // сохраняем файл в папку Files в каталоге wwwroot
-            using (var fileStream = new FileStream(path, FileMode.Create))
-            {
-                await command.InnScan.CopyToAsync(fileStream, cancellationToken);
-            }
-            var innScan = new FileModel { Name = command.InnScan.FileName, Path = path };
+            var innScan = await FormFileModel.Form(command.InnScan, cancellationToken);
+            var ogrnScan = await FormFileModel.Form(command.OgrnScan, cancellationToken);
+            var egripScan = await FormFileModel.Form(command.EgripScan, cancellationToken);
+            var contractRentScan = await FormFileModel.Form(command.ContractRentScan, cancellationToken);
 
             var profile = new Domain.Profile.Profile(command.FullName,
                                                      command.ShortName,
@@ -38,9 +34,9 @@ namespace Profile.Service.Infrastructure
                                                      innScan,
                                                      command.RegistrationDate,
                                                      command.Ogrn,
-                                                  //   command.OgrnScan,
-                                                  //   command.EgripScan,
-                                                  //   command.ContractRentScan,
+                                                     ogrnScan,
+                                                     egripScan,
+                                                     contractRentScan,
                                                      command.IsNoContract,
                                                      command.BankDetails);
 

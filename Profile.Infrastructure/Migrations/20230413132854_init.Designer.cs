@@ -10,7 +10,7 @@ using Profile.Infrastructure;
 namespace Profile.Infrastructure.Migrations
 {
     [DbContext(typeof(ProfileDbContext))]
-    [Migration("20230413125319_init")]
+    [Migration("20230413132854_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,6 +75,12 @@ namespace Profile.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ContractRentScanId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EgripScanId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
@@ -90,6 +96,9 @@ namespace Profile.Infrastructure.Migrations
                     b.Property<string>("Ogrn")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OgrnScanId")
+                        .HasColumnType("int");
+
                     b.Property<string>("RegistrationDate")
                         .HasColumnType("nvarchar(max)");
 
@@ -98,7 +107,13 @@ namespace Profile.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ContractRentScanId");
+
+                    b.HasIndex("EgripScanId");
+
                     b.HasIndex("InnScanId");
+
+                    b.HasIndex("OgrnScanId");
 
                     b.ToTable("Profiles");
                 });
@@ -112,11 +127,29 @@ namespace Profile.Infrastructure.Migrations
 
             modelBuilder.Entity("Profile.Domain.Profile.Profile", b =>
                 {
+                    b.HasOne("Profile.Domain.FileModels.FileModel", "ContractRentScan")
+                        .WithMany()
+                        .HasForeignKey("ContractRentScanId");
+
+                    b.HasOne("Profile.Domain.FileModels.FileModel", "EgripScan")
+                        .WithMany()
+                        .HasForeignKey("EgripScanId");
+
                     b.HasOne("Profile.Domain.FileModels.FileModel", "InnScan")
                         .WithMany()
                         .HasForeignKey("InnScanId");
 
+                    b.HasOne("Profile.Domain.FileModels.FileModel", "OgrnScan")
+                        .WithMany()
+                        .HasForeignKey("OgrnScanId");
+
+                    b.Navigation("ContractRentScan");
+
+                    b.Navigation("EgripScan");
+
                     b.Navigation("InnScan");
+
+                    b.Navigation("OgrnScan");
                 });
 
             modelBuilder.Entity("Profile.Domain.Profile.Profile", b =>

@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Profile.Domain.FileModels;
+﻿using Profile.Domain.FileModels;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Profile.Domain.Profile
 {
@@ -14,9 +12,9 @@ namespace Profile.Domain.Profile
         public FileModel InnScan { get; set; }
         public string RegistrationDate { get; set; }
         public string Ogrn { get; set; }
-        //public byte[] OgrnScan { get; set; }
-        //public byte[] EgripScan { get; set; }
-        //public byte[]? ContractRentScan { get; set; }
+        public FileModel OgrnScan { get; set; }
+        public FileModel EgripScan { get; set; }
+        public FileModel? ContractRentScan { get; set; }
         public bool IsNoContract { get; set; }
         public List<BankDetail> BankDetails { get; set; }
         
@@ -30,9 +28,9 @@ namespace Profile.Domain.Profile
                FileModel innScan,
                string registrationDate,
                string ogrn,
-               //byte[] ogrnScan,
-               //byte[] egripScan,
-               //byte[] contractRentScan,
+               FileModel ogrnScan,
+               FileModel egripScan,
+               FileModel contractRentScan,
                bool isNoContract,
                List<BankDetail> bankDetails)
         {
@@ -42,9 +40,9 @@ namespace Profile.Domain.Profile
             InnScan = innScan;
             RegistrationDate = registrationDate;
             Ogrn = ogrn;
-          //  OgrnScan = ogrnScan;
-            //EgripScan = egripScan;
-           // ContractRentScan = contractRentScan;
+            OgrnScan = ogrnScan;
+            EgripScan = egripScan;
+            ContractRentScan = contractRentScan;
             IsNoContract = isNoContract;
             BankDetails = bankDetails;
         }

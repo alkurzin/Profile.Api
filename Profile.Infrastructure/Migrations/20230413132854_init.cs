@@ -32,14 +32,35 @@ namespace Profile.Infrastructure.Migrations
                     InnScanId = table.Column<int>(type: "int", nullable: true),
                     RegistrationDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ogrn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OgrnScanId = table.Column<int>(type: "int", nullable: true),
+                    EgripScanId = table.Column<int>(type: "int", nullable: true),
+                    ContractRentScanId = table.Column<int>(type: "int", nullable: true),
                     IsNoContract = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Profiles", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Profiles_FileModel_ContractRentScanId",
+                        column: x => x.ContractRentScanId,
+                        principalTable: "FileModel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Profiles_FileModel_EgripScanId",
+                        column: x => x.EgripScanId,
+                        principalTable: "FileModel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Profiles_FileModel_InnScanId",
                         column: x => x.InnScanId,
+                        principalTable: "FileModel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Profiles_FileModel_OgrnScanId",
+                        column: x => x.OgrnScanId,
                         principalTable: "FileModel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -74,9 +95,24 @@ namespace Profile.Infrastructure.Migrations
                 column: "ProfileId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Profiles_ContractRentScanId",
+                table: "Profiles",
+                column: "ContractRentScanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profiles_EgripScanId",
+                table: "Profiles",
+                column: "EgripScanId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Profiles_InnScanId",
                 table: "Profiles",
                 column: "InnScanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profiles_OgrnScanId",
+                table: "Profiles",
+                column: "OgrnScanId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

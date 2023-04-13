@@ -16,9 +16,9 @@ namespace Profile.Service.Commands.Profile
         public IFormFile InnScan { get; set; }
         public string RegistrationDate { get; set; }
         public string Ogrn { get; set; }
-       // public byte[] OgrnScan { get; set; }
-       // public byte[] EgripScan { get; set; }
-       // public byte[]? ContractRentScan { get; set; }
+        public IFormFile OgrnScan { get; set; }
+        public IFormFile EgripScan { get; set; }
+        public IFormFile? ContractRentScan { get; set; }
         public bool IsNoContract { get; set; }
         public List<BankDetail> BankDetails { get; set; }
     }
