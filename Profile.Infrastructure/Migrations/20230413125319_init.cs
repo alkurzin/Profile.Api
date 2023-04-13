@@ -7,6 +7,20 @@ namespace Profile.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "FileModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileModel", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Profiles",
                 columns: table => new
                 {
@@ -15,6 +29,7 @@ namespace Profile.Infrastructure.Migrations
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShortName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Inn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InnScanId = table.Column<int>(type: "int", nullable: true),
                     RegistrationDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ogrn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsNoContract = table.Column<bool>(type: "bit", nullable: false)
@@ -22,6 +37,12 @@ namespace Profile.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Profiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Profiles_FileModel_InnScanId",
+                        column: x => x.InnScanId,
+                        principalTable: "FileModel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,6 +72,11 @@ namespace Profile.Infrastructure.Migrations
                 name: "IX_BankDetail_ProfileId",
                 table: "BankDetail",
                 column: "ProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profiles_InnScanId",
+                table: "Profiles",
+                column: "InnScanId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -60,6 +86,9 @@ namespace Profile.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Profiles");
+
+            migrationBuilder.DropTable(
+                name: "FileModel");
         }
     }
 }

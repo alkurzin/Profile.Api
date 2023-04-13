@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using Profile.Domain.FileModels;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Profile.Domain.Profile
 {
@@ -8,7 +11,7 @@ namespace Profile.Domain.Profile
         public string? FullName { get; set; }
         public string? ShortName { get; set; }
         public string Inn { get; set; }
-        //public byte[] InnScan { get; set; }
+        public FileModel InnScan { get; set; }
         public string RegistrationDate { get; set; }
         public string Ogrn { get; set; }
         //public byte[] OgrnScan { get; set; }
@@ -24,7 +27,7 @@ namespace Profile.Domain.Profile
         public Profile(string fullName,
                string shortName,
                string inn,
-               //byte[] innScan,
+               FileModel innScan,
                string registrationDate,
                string ogrn,
                //byte[] ogrnScan,
@@ -36,7 +39,7 @@ namespace Profile.Domain.Profile
             FullName = fullName;
             ShortName = shortName;
             Inn = inn;
-           // InnScan = innScan;
+            InnScan = innScan;
             RegistrationDate = registrationDate;
             Ogrn = ogrn;
           //  OgrnScan = ogrnScan;

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Profile.Domain.Profile;
 using Profile.Service.Infrastructure;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Profile.Service.Commands.Profile
         public string? FullName { get; set; }
         public string? ShortName { get; set; }
         public string Inn { get; set; }
-        //public byte[] InnScan { get; set; }
+        public IFormFile InnScan { get; set; }
         public string RegistrationDate { get; set; }
         public string Ogrn { get; set; }
        // public byte[] OgrnScan { get; set; }

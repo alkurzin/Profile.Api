@@ -19,6 +19,24 @@ namespace Profile.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Profile.Domain.FileModels.FileModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FileModel");
+                });
+
             modelBuilder.Entity("Profile.Domain.Profile.BankDetail", b =>
                 {
                     b.Property<long>("Id")
@@ -61,6 +79,9 @@ namespace Profile.Infrastructure.Migrations
                     b.Property<string>("Inn")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("InnScanId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsNoContract")
                         .HasColumnType("bit");
 
@@ -75,6 +96,8 @@ namespace Profile.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("InnScanId");
+
                     b.ToTable("Profiles");
                 });
 
@@ -83,6 +106,15 @@ namespace Profile.Infrastructure.Migrations
                     b.HasOne("Profile.Domain.Profile.Profile", null)
                         .WithMany("BankDetails")
                         .HasForeignKey("ProfileId");
+                });
+
+            modelBuilder.Entity("Profile.Domain.Profile.Profile", b =>
+                {
+                    b.HasOne("Profile.Domain.FileModels.FileModel", "InnScan")
+                        .WithMany()
+                        .HasForeignKey("InnScanId");
+
+                    b.Navigation("InnScan");
                 });
 
             modelBuilder.Entity("Profile.Domain.Profile.Profile", b =>

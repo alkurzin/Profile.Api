@@ -20,7 +20,7 @@ namespace Profile.Api.Controllers
         ///Добавить анкету
         /// </summary>
         [HttpPost("")]
-        public async Task<Domain.Profile.Profile> AddTask([FromBody] AddProfileCommand command)
+        public async Task<Domain.Profile.Profile> AddTask([FromForm] AddProfileCommand command)
         {
             return await _mediator.Send(command);
         }
