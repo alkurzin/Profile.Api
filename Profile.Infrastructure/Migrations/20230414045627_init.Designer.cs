@@ -10,7 +10,7 @@ using Profile.Infrastructure;
 namespace Profile.Infrastructure.Migrations
 {
     [DbContext(typeof(ProfileDbContext))]
-    [Migration("20230413132854_init")]
+    [Migration("20230414045627_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

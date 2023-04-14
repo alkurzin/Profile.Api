@@ -30,7 +30,7 @@ namespace Profile.Domain.Profile
                string ogrn,
                FileModel ogrnScan,
                FileModel egripScan,
-               FileModel contractRentScan,
+               FileModel? contractRentScan,
                bool isNoContract,
                List<BankDetail> bankDetails)
         {

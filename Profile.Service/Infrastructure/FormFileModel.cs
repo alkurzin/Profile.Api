@@ -10,13 +10,18 @@ namespace Profile.Service.Infrastructure
     {
         public static async Task<FileModel> Form(IFormFile file, CancellationToken cancellationToken)
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), file.FileName);
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            if(file != null)
             {
-                await file.CopyToAsync(fileStream, cancellationToken);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), file.FileName);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream, cancellationToken);
+                }
+
+                return new FileModel { Name = file.FileName, Path = path };
             }
 
-            return new FileModel { Name = file.FileName, Path = path };
+            return null;
         }
     }
 }
